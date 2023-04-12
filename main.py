@@ -192,7 +192,7 @@ class HealthDataExtractor(object):
 
     def report_stats(self):
         # Apri il file report.txt in modalità "append" per scrivere alla fine del file
-        with open("output/report.txt", "a") as report_file:
+        with open("output/report.txt", "w") as report_file:
             report_file.write('\nTags:\n%s\n' % format_freqs(self.tags))
             report_file.write('Fields:\n%s\n' % format_freqs(self.fields))
             report_file.write('Record types:\n%s\n\n' % format_freqs(self.record_types))
