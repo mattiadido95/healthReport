@@ -18,6 +18,10 @@ from collections import Counter, OrderedDict
 
 __version__ = '1.0'
 
+from splitDataSource import filter_csv
+
+import plot as pl
+
 FIELDS = OrderedDict((
     ('sourceName', 's'),
     ('sourceVersion', 's'),
@@ -39,7 +43,7 @@ def format_freqs(counter):
     """
     Format a counter object for display.
     """
-    return '\n'.join('%s: %d' % (tag, counter[tag])
+    return '\n\t'.join('%s: %d' % (tag, counter[tag])
                      for tag in sorted(counter.keys()))
 
 
@@ -128,19 +132,16 @@ class HealthDataExtractor(object):
             if record.tag == 'Record':
                 self.record_types[record.attrib['type']] += 1
 
+    def count_sourceName(self):
+        self.sourceName = Counter()
+        for record in self.nodes:
+            if record.tag == 'Record':
+                self.sourceName[record.attrib['sourceName']] += 1
+
     def collect_stats(self):
         self.count_record_types()
         self.count_tags_and_fields()
-
-    # def open_for_writing(self):
-    #     self.handles = {}
-    #     self.paths = []
-    #     for kind in self.record_types:
-    #         path = os.path.join(self.directory, '%s.csv' % abbreviate(kind))
-    #         f = open(path, 'w')
-    #         f.write(','.join(FIELDS) + '\n')
-    #         self.handles[kind] = f
-    #         self.report('Opening %s for writing' % path)
+        self.count_sourceName()
 
     def open_for_writing(self):
         self.handles = {}
@@ -184,30 +185,27 @@ class HealthDataExtractor(object):
         self.write_records()
         self.close_files()
 
-    # def report_stats(self):
-    #     print('\nTags:\n%s\n' % format_freqs(self.tags))
-    #     print('Fields:\n%s\n' % format_freqs(self.fields))
-    #     print('Record types:\n%s\n' % format_freqs(self.record_types))
-
-
     def report_stats(self):
-        # Apri il file report.txt in modalità "append" per scrivere alla fine del file
         with open("output/report.txt", "w") as report_file:
-            report_file.write('\nTags:\n%s\n' % format_freqs(self.tags))
-            report_file.write('Fields:\n%s\n' % format_freqs(self.fields))
-            report_file.write('Record types:\n%s\n\n' % format_freqs(self.record_types))
+            report_file.write(f'Tags:\n\t{format_freqs(self.tags)}\n\n')
+            report_file.write(f'Fields:\n\t{format_freqs(self.fields)}\n\n')
+            report_file.write(f'Record types:\n\t{format_freqs(self.record_types)}\n\n')
+            report_file.write(f'Source Names:\n\t{format_freqs(self.sourceName)}\n\n')
 
-            # Stampa il report anche sulla console
-            print('\nTags:\n%s\n' % format_freqs(self.tags))
-            print('Fields:\n%s\n' % format_freqs(self.fields))
-            print('Record types:\n%s\n' % format_freqs(self.record_types))
+        print('\nTags:\n\t%s\n\n' % format_freqs(self.tags))
+        print('Fields:\n\t%s\n\n' % format_freqs(self.fields))
+        print('Record types:\n\t%s\n\n' % format_freqs(self.record_types))
+        print('Source Names:\n\t%s\n\n' % format_freqs(self.sourceName))
 
 
 if __name__ == '__main__':
-    # if len(sys.argv) != 2:
-    #     print('USAGE: python applehealthdata.py /path/to/export.xml',
-    #           file=sys.stderr)
-    #     sys.exit(1)
-    data = HealthDataExtractor('/data/dataExport.xml')
-    data.report_stats()
-    data.extract()
+    # data = HealthDataExtractor('/data/dataExport.xml')
+    # data.report_stats()
+    # data.extract()
+
+    # input_file = "output/export.csv"
+    # field1 = "Apple Watch di Mattia"
+    # field2 = "ActiveEnergyBurned"
+    # output_file = filter_csv(input_file, field1, field2)
+
+    pl.plot()
