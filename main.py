@@ -44,7 +44,7 @@ def format_freqs(counter):
     Format a counter object for display.
     """
     return '\n\t'.join('%s: %d' % (tag, counter[tag])
-                     for tag in sorted(counter.keys()))
+                       for tag in sorted(counter.keys()))
 
 
 def format_value(value, datatype):
@@ -203,9 +203,63 @@ if __name__ == '__main__':
     # data.report_stats()
     # data.extract()
 
-    # input_file = "output/export.csv"
-    # field1 = "Apple Watch di Mattia"
-    # field2 = "ActiveEnergyBurned"
-    # output_file = filter_csv(input_file, field1, field2)
+    sources = [
+        {'label': 'Apple Watch di Mattia', 'value': 496776},
+        {'label': 'Livelli O₂', 'value': 8},
+        {'label': 'Oral-B', 'value': 298},
+        {'label': 'Salute', 'value': 7},
+        {'label': 'Zepp Life', 'value': 174396},
+        {'label': 'iPhone di Mattia (8)', 'value': 881848},
+    ]
 
-    pl.plot()
+    record_types = [
+        {'label': 'ActiveEnergyBurned', 'value': 264442},
+        {'label': 'AppleExerciseTime', 'value': 4044},
+        {'label': 'AppleStandHour', 'value': 5543},
+        {'label': 'AppleStandTime', 'value': 13814},
+        {'label': 'AppleWalkingSteadiness', 'value': 80},
+        {'label': 'AudioExposureEvent', 'value': 3},
+        {'label': 'BasalEnergyBurned', 'value': 68215},
+        {'label': 'BodyFatPercentage', 'value': 247},
+        {'label': 'BodyMass', 'value': 324},
+        {'label': 'BodyMassIndex', 'value': 323},
+        {'label': 'DistanceCycling', 'value': 4988},
+        {'label': 'DistanceWalkingRunning', 'value': 38409},
+        {'label': 'EnvironmentalAudioExposure', 'value': 8281},
+        {'label': 'FlightsClimbed', 'value': 2609},
+        {'label': 'HKDataTypeSleepDurationGoal', 'value': 1},
+        {'label': 'HeadphoneAudioExposure', 'value': 3513},
+        {'label': 'HeadphoneAudioExposureEvent', 'value': 4},
+        {'label': 'HeartRate', 'value': 1040578},
+        {'label': 'HeartRateRecoveryOneMinute', 'value': 10},
+        {'label': 'HeartRateVariabilitySDNN', 'value': 2237},
+        {'label': 'Height', 'value': 1},
+        {'label': 'LeanBodyMass', 'value': 247},
+        {'label': 'LowHeartRateEvent', 'value': 7},
+        {'label': 'OxygenSaturation', 'value': 2983},
+        {'label': 'RespiratoryRate', 'value': 4405},
+        {'label': 'RestingHeartRate', 'value': 376},
+        {'label': 'SexualActivity', 'value': 4},
+        {'label': 'SixMinuteWalkTestDistance', 'value': 31},
+        {'label': 'SleepAnalysis', 'value': 7411},
+        {'label': 'StairAscentSpeed', 'value': 716},
+        {'label': 'StairDescentSpeed', 'value': 857},
+        {'label': 'StepCount', 'value': 45492},
+        {'label': 'ToothbrushingEvent', 'value': 298},
+        {'label': 'VO2Max', 'value': 58},
+        {'label': 'WalkingAsymmetryPercentage', 'value': 3409},
+        {'label': 'WalkingDoubleSupportPercentage', 'value': 6854},
+        {'label': 'WalkingHeartRateAverage', 'value': 315},
+        {'label': 'WalkingSpeed', 'value': 11102},
+        {'label': 'WalkingStepLength', 'value': 11102},
+    ]
+
+    # input_file = "output/export.csv"
+    # for source in sources:
+    #     field1 = source['label']
+    #     for record_type in record_types:
+    #         field2 = record_type['label']
+    #         print(field1, field2)
+    #         output_file = filter_csv(input_file, field1, field2)
+
+    pl.plot_csv_data('output/splitted/Apple Watch di Mattia_DistanceWalkingRunning.csv')

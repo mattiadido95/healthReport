@@ -11,10 +11,9 @@ def filter_csv(input_file, field1, field2):
         filtered_data = []
         for row in reader:
             source = re.sub(r'[^\w\s]|[\xa0]', ' ', re.sub(r'[À-ÖØ-öø-ÿ]', '', row['sourceName']))
-            print(source, field1)
             if source == field1 and row['type'] == field2:
                 filtered_data.append(row)
-    output_file = os.path.join("output", f"{field1}_{field2}.csv")
+    output_file = os.path.join("output/splitted", f"{field1}_{field2}.csv")
     with open(output_file, 'w', newline='') as f:
         fieldnames = reader.fieldnames
         writer = csv.DictWriter(f, fieldnames=fieldnames)
