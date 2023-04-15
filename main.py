@@ -199,6 +199,11 @@ class HealthDataExtractor(object):
 
 
 if __name__ == '__main__':
+
+    """
+        To have plot about data, run the two following commented parts.
+    """
+
     # data = HealthDataExtractor('/data/dataExport.xml')
     # data.report_stats()
     # data.extract()
